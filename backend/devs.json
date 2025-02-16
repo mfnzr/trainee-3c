@@ -25,11 +25,11 @@
     },
     {
         "id": 3,
-        "name": "Gabriel",
-        "gender": "M",
-        "date_of_birth": "10/11/2002",
-        "age": "22",
-        "hobby": "Programar",
+        "name": "Gabriela Guerra",
+        "gender": "F",
+        "date_of_birth": "15/07/2004",
+        "age": "20",
+        "hobby": "Programação",
         "level": {
             "id": 1,
             "level": "Junior"

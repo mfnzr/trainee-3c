@@ -1,4 +1,4 @@
-const { getAllDevs, getDevById, insertDev } = require('../Services/DevsServices.js');
+const { getAllDevs, getDevById, insertDev, updateDev, deleteDevById } = require('../Services/DevsServices.js');
 
 function getDevs(req, res) {
     try {
@@ -33,8 +33,35 @@ function postDevs(req, res) {
     }
 }
 
+function patchDev(req, res){
+    try {
+        const id = req.params.id;
+        const body = req.body;
+        updateDev(body, id)
+        res.send("Dev Atualizado com Sucesso!");
+
+    }catch(error){
+        res.status(500)
+        res.send(error.message);
+    }
+} 
+
+function deleteDev(req, res) {
+    try {
+        const id = req.params.id;
+        deleteDevById(id)
+        deleteDev(body, id)
+        res.send("Dev deletado com sucesso")
+    } catch {
+        res.status(500)
+        res.send(error.message);
+    }
+}
+
 module.exports = {
     getDevs,
     getDev,
-    postDevs
+    postDevs,
+    patchDev,
+    deleteDev
 };
