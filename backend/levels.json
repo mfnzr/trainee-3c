@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "level": "Junior"
+    },
+    {
+        "id": 2,
+        "level": "Pleno"
+    },
+    {
+        "id": 3,
+        "level": "Senior"
+    }
+]
