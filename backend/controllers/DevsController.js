@@ -32,9 +32,16 @@ function getDev(req, res) {
 function postDevs(req, res) {
     try {
         const newDev = req.body;
-        insertDev(newDev);
-        res.status(201)
-        res.send('Dev Cadastrado com Sucesso!');
+
+        //verificação se todos os campos estão preenchidos
+        if (req.body.name && req.body.age && req.body.gender && req.body.hobby && req.body.level) {
+            insertDev(newDev);
+            res.status(201)
+            res.send('Dev Cadastrado com Sucesso!');
+        } else {
+            res.status(422)
+            res.send('Todos os campos devem ser preenchidos')
+        }
     } catch (error) {
         res.status(500)
         res.send(error.message);
