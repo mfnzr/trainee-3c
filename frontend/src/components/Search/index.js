@@ -1,7 +1,7 @@
 import Input from '../Input';
 import styled from 'styled-components';
-import { useState } from 'react';
-import { dbDevs } from './dbDevs';
+import { useEffect, useState } from 'react';
+import { getDevs } from '../../services/devs';
 
 const SearchContainer = styled.section`
     display: flex;
@@ -71,6 +71,16 @@ const Card = styled.div`
 
 function Search() {
     const [devSearch, setDevSearch] = useState([]);
+    const [devs, setDevs] =useState([]);
+
+    useEffect(() => {
+            fetchDevs();
+        }, []);
+
+        async function fetchDevs() {
+            const devsFromAPI = await getDevs();
+            setDevs(devsFromAPI);
+        }
 
     return (
         <SearchContainer>
@@ -83,7 +93,8 @@ function Search() {
                         setDevSearch([]);
                         return;
                     }
-                    const resultSearch = dbDevs.filter(dev => dev.name.toLowerCase().includes(devSearch.toLowerCase()));
+                    console.log(devs)
+                    const resultSearch = devs.filter(dev => dev.name.toLowerCase().includes(devSearch.toLowerCase()));
                     setDevSearch(resultSearch);
                 }}
             />

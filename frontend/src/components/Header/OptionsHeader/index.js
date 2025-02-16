@@ -1,5 +1,5 @@
-import { useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Option = styled.li`
     list-style: none;
@@ -50,34 +50,16 @@ const Submenu = styled.ul`
     }
 `;
 
-const textOptions = ["Cadastro", "Desenvolvedores", "Níveis"];
-const levelOptions = ["Júnior", "Pleno", "Sênior"];
+const textOptions = ["Cadastro", "Desenvolvedores"];
 
-function OptionsHeader({ setFilterLevel }) {
-    const [showSubmenu, setShowSubmenu] = useState(false);
-
+function OptionsHeader() {
     return (
         <Options>
             {textOptions.map((text, index) =>
-                text === "Níveis" ? (
-                    <SubmenuContainer
-                        key={index}
-                        onMouseEnter={() => setShowSubmenu(true)}
-                        onMouseLeave={() => setShowSubmenu(false)}
-                    >
-                        <Option>{text}</Option>
-                        <Submenu isVisible={showSubmenu}>
-                            {levelOptions.map((level) => (
-                                <li key={level} onClick={() => setFilterLevel(level)}>
-                                    {level}
-                                </li>
-                            ))}
-                        </Submenu>
-                    </SubmenuContainer>
-                ) : (
-                    <Option key={index}>{text}</Option>
-                )
-            )}
+                <Link to={`/${text.toLocaleLowerCase()}`} key={index} >
+                    <Option>{text}</Option></Link>
+            )
+            }
         </Options>
     );
 }

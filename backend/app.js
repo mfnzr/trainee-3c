@@ -1,8 +1,11 @@
 const express = require('express'); //framework de aplicações web (facilita a criação de APIs)
 const devsRouter = require('./routes/DevsRouter'); //recebe as rotas
-const app = express(); //inicializa a aplicação
+const cors = require('cors');
 
+const app = express(); //inicializa a aplicação
 app.use(express.json()); //permite que o express entenda os dados enviados pela requisição
+app.use(cors({ origin: '*', }));
+
 app.use('/devs', devsRouter);
 
 

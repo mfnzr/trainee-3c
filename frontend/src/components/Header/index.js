@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Logo from '../Logo';
 import OptionsHeader from './OptionsHeader';
 import styled from 'styled-components';
@@ -12,7 +13,9 @@ const HeaderContainer = styled.header`
 function Header({ setFilterLevel }) {
     return (
         <HeaderContainer>
-            <Logo />
+            <Link to="/">
+                <Logo />
+            </Link>
             <OptionsHeader setFilterLevel={setFilterLevel} />
         </HeaderContainer>
     );
