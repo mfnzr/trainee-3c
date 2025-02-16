@@ -1,13 +1,12 @@
 const {Router} = require('express');
-const {getDevs} = require('../controllers/DevsController');
+const {getDevs, postDevs} = require('../controllers/DevsController');
+const {getDev} = require('../controllers/DevsController');
 
 const router = Router();
 
 router.get('/', getDevs);
-
-router.post('/', (req, res) => {
-    res.send('vc fez uma req post!');
-});
+router.get('/:id', getDev);
+router.post('/', postDevs);
 
 router.patch('/', (req, res) => {
     res.send('vc fez uma req PATCH!');

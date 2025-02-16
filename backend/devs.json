@@ -1,1 +1,38 @@
-[{"id":1,"name":"","gender":"","date_of_birth":"","age":"","hobby":"","level":{"id":1,"level":""}},{"id":"3","name":"Maria","age":"25","gender":"Feminino","date_of_birth":"10/11/2000","hobby":"(11) 99999-9999","level":{"id":"1","level":"Junior"}},{"id":"3","name":"Maria","age":"25","gender":"Feminino","date_of_birth":"10/11/2000","hobby":"(11) 99999-9999","level":{"id":"1","level":"Junior"}}]
+[
+    {
+        "id": 1,
+        "name": "Maria",
+        "gender": "F",
+        "date_of_birth": "10/11/2000",
+        "age": "24",
+        "hobby": "Programar",
+        "level": {
+            "id": 1,
+            "level": "Junior"
+        }
+    },
+    {
+        "id": 2,
+        "name": "Luiz",
+        "gender": "M",
+        "date_of_birth": "",
+        "age": "",
+        "hobby": "",
+        "level": {
+            "id": 1,
+            "level": ""
+        }
+    },
+    {
+        "id": 3,
+        "name": "Gabriel",
+        "gender": "M",
+        "date_of_birth": "10/11/2002",
+        "age": "22",
+        "hobby": "Programar",
+        "level": {
+            "id": 1,
+            "level": "Junior"
+        }
+    }
+]

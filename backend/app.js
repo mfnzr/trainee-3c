@@ -1,8 +1,8 @@
-const express = require('express');
-const devsRouter = require('./routes/DevsRouter');
+const express = require('express'); //framework de aplicações web (facilita a criação de APIs)
+const devsRouter = require('./routes/DevsRouter'); //recebe as rotas
+const app = express(); //inicializa a aplicação
 
-const app = express();
-
+app.use(express.json()); //permite que o express entenda os dados enviados pela requisição
 app.use('/devs', devsRouter);
 
 
