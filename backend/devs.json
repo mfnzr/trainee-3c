@@ -1,38 +1,12 @@
-[
-    {
+{
+    "id": 1,
+    "name": "Maria",
+    "gender": "F",
+    "date_of_birth": "10/11/2000",
+    "age": "24",
+    "hobby": "Programar",
+    "level": {
         "id": 1,
-        "name": "Maria",
-        "gender": "F",
-        "date_of_birth": "10/11/2000",
-        "age": "24",
-        "hobby": "Programar",
-        "level": {
-            "id": 1,
-            "level": "Junior"
-        }
-    },
-    {
-        "id": 2,
-        "name": "Luiz",
-        "gender": "M",
-        "date_of_birth": "",
-        "age": "",
-        "hobby": "",
-        "level": {
-            "id": 1,
-            "level": ""
-        }
-    },
-    {
-        "id": 3,
-        "name": "Gabriela Guerra",
-        "gender": "F",
-        "date_of_birth": "15/07/2004",
-        "age": "20",
-        "hobby": "Programação",
-        "level": {
-            "id": 1,
-            "level": "Junior"
-        }
+        "level": "Junior"
     }
-]
+}

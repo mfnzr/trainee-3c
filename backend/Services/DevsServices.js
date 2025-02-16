@@ -31,10 +31,10 @@ function updateDev(update, id) {
 }
 
 function deleteDevById(id) {
-    const devs = json.parse(fs.readfileSync('devs.json')); 
+    const devs = JSON.parse(fs.readFileSync('devs.json')); 
 
-    const FilteredDev = devs.filter(dev => dev.id !== Number(id))[0];
-    fs.writeFileSync('devs.json', JSON.stringify(FilteredDev))
+    const filteredDev = devs.filter(dev => dev.id !== Number(id));
+    fs.writeFileSync('devs.json', JSON.stringify(filteredDev))
 }
 
 module.exports = {

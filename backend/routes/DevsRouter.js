@@ -9,6 +9,6 @@ router.get('/:id', getDev);
 router.post('/', postDevs);
 router.patch('/:id', patchDev);
 
-router.delete('/', deleteDev)
+router.delete('/:id', deleteDev)
 
 module.exports = router;
