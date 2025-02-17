@@ -291,8 +291,8 @@ function Developers() {
                         <p><strong>Hobby:</strong> {dev.hobby}</p>
                         <p><strong>Nível:</strong> {dev.level}</p>
                         <Button onClick={() => handleDelete(dev.id)}>Excluir</Button>
-                        <Button onClick={() => handleEdit(dev)} disabled={isModalOpen}>Editar</Button>
-                        </Card>
+                        <Button onClick={() => handleEdit(dev)}>Editar</Button> {/* Novo botão de editar */}
+                    </Card>
 
                 ))}
             </CardsWrapper>
