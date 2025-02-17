@@ -50,7 +50,7 @@ const Submenu = styled.ul`
     }
 `;
 
-const textOptions = ["Cadastro", "Desenvolvedores"];
+const textOptions = [];
 
 function OptionsHeader() {
     return (

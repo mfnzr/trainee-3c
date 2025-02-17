@@ -6,7 +6,7 @@ import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Register from './routes/Register';
+import Levels from './routes/Levels';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -35,7 +35,7 @@ root.render(
     <BrowserRouter >
       <Header />
       <Routes>
-        <Route path="/cadastro" element={<Register />} />
+        <Route path="/cadastro" element={<Levels />} />
         <Route path="/" element={<Home />} />
       </Routes>
       <Footer />

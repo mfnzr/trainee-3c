@@ -8,7 +8,8 @@ router.get('/', getDevs);
 router.get('/:id', getDev);
 router.post('/', postDevs);
 router.patch('/:id', patchDev);
-
 router.delete('/:id', deleteDev)
+
+
 
 module.exports = router;

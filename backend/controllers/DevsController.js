@@ -69,15 +69,23 @@ function patchDev(req, res) {
 function deleteDev(req, res) {
     try {
         const id = req.params.id;
+
         if (id && Number(id)) {
-            deleteDevById(id)
-            res.send("Dev deletado com sucesso")
+            const dev = getDevById(id);
+
+            if (dev) {
+                deleteDevById(id); 
+                res.send("Dev deletado com sucesso");
+            } else {
+                res.status(404);  
+                res.send('Desenvolvedor não encontrado');
+            }
         } else {
-            res.status(422)
-            res.send('Id inválido')
+            res.status(422);
+            res.send('Id inválido');
         }
     } catch (error) {
-        res.status(500)
+        res.status(500);
         res.send(error.message);
     }
 }

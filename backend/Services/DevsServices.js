@@ -32,9 +32,14 @@ function updateDev(update, id) {
 
 function deleteDevById(id) {
     const devs = JSON.parse(fs.readFileSync('devs.json')); 
+    const devToDelete = devs.find(dev => dev.id === Number(id));
+    
+    if (!devToDelete) {
+        throw new Error("Desenvolvedor não encontrado");
+    }
 
-    const filteredDev = devs.filter(dev => dev.id !== Number(id));
-    fs.writeFileSync('devs.json', JSON.stringify(filteredDev))
+    const filteredDevs = devs.filter(dev => dev.id !== Number(id));
+    fs.writeFileSync('devs.json', JSON.stringify(filteredDevs, null, 2)); // Indente o JSON para melhor legibilidade
 }
 
 module.exports = {
