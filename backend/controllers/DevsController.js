@@ -54,15 +54,13 @@ function patchDev(req, res) {
 
         if (id && Number(id)) {
             const body = req.body;
-            updateDev(body, id)
-            res.send('Dev Atualizado com Sucesso!');
+            updateDev(body, id);
+            res.status(200).json({ message: "Dev Atualizado com Sucesso!" });
         } else {
-            res.status(422)
-            res.send('Id inválido')
+            res.status(422).json({ error: "Id inválido" });
         }
     } catch (error) {
-        res.status(500)
-        res.send(error.message);
+        res.status(500).json({ error: error.message });
     }
 }
 

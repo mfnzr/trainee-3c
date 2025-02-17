@@ -42,6 +42,42 @@ function deleteDevById(id) {
     fs.writeFileSync('devs.json', JSON.stringify(filteredDevs, null, 2)); // Indente o JSON para melhor legibilidade
 }
 
+const path = require('path');
+
+const devsFilePath = path.join(__dirname, '../devs.json');
+
+// Função para ler dados do arquivo
+function readDevsFromFile() {
+    const data = fs.readFileSync(devsFilePath, 'utf8');
+    return JSON.parse(data);
+}
+
+// Função para salvar dados no arquivo
+function writeDevsToFile(devs) {
+    fs.writeFileSync(devsFilePath, JSON.stringify(devs, null, 2), 'utf8');
+}
+
+// Função para atualizar o desenvolvedor
+function updateDev(updatedDev, id) {
+    const devs = readDevsFromFile(); // Lê os dados do arquivo
+    const index = devs.findIndex(dev => dev.id === parseInt(id)); // Encontra o índice do desenvolvedor
+
+    if (index === -1) {
+        throw new Error('Desenvolvedor não encontrado');
+    }
+
+    // Atualiza o desenvolvedor com os novos dados
+    devs[index] = { ...devs[index], ...updatedDev };
+    
+    writeDevsToFile(devs); // Salva os dados atualizados no arquivo
+}
+
+module.exports = {
+    updateDev,
+    // outras funções
+};
+
+
 module.exports = {
     getAllDevs,
     getDevById,

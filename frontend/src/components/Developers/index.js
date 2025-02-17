@@ -9,7 +9,7 @@ const DevelopersContainer = styled.section`
     color: #333;
     text-align: center;
     padding: 30px 20px;
-    min-height: 50vh;
+    min-height: 80vh;
     width: 100vw;
     background-color: #f4f7fc;
 `;
@@ -78,7 +78,7 @@ const Input = styled.input`
 
     &:focus {
         border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        box-shadow: 0 0 5px #3E444F;
     }
 `;
 
@@ -98,7 +98,7 @@ const Select = styled.select`
 `;
 
 const Button = styled.button`
-    background-color: #007bff;
+    background-color: #3E444F;
     color: white;
     border: none;
     padding: 12px 20px;
@@ -109,11 +109,11 @@ const Button = styled.button`
     transition: background-color 0.3s ease;
 
     &:hover {
-        background-color: #0056b3;
+        background-color:rgb(126, 147, 185);
     }
 
     &:active {
-        background-color: #004085;
+        background-color: #3E444F;
     }
 `;
 
@@ -142,6 +142,20 @@ function Developers() {
         hobby: "",
         level: ""
     });
+    const [editDev, setEditDev] = useState(null);  // Estado para o desenvolvedor a ser editado
+    useEffect(() => {
+        if (editDev) {
+            setNewDev({
+                name: editDev.name,
+                age: editDev.age,
+                gender: editDev.gender,
+                date_of_birth: editDev.date_of_birth,
+                hobby: editDev.hobby,
+                level: levels.find(l => l.level === editDev.level)?.id || ""
+            });
+        }
+    }, [editDev]);
+
 
     useEffect(() => {
         fetch("http://localhost:8000/devs")
@@ -163,31 +177,85 @@ function Developers() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newDeveloper = {
-            id: developers.length + 1,
-            ...newDev,
-            level: levels.find(l => l.id === newDev.level),
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-        };
+
+        // Verifica se todos os campos estão preenchidos
+        if (!newDev.name || !newDev.age || !newDev.gender || !newDev.date_of_birth || !newDev.hobby || !newDev.level) {
+            alert("Todos os campos devem ser preenchidos!");
+            return;
+        }
+
+        if (editDev) {
+            // Atualiza o desenvolvedor existente
+            const updatedDev = {
+                ...newDev,
+                id: editDev.id,
+                level: levels.find(l => l.id === parseInt(newDev.level))?.level || "",
+                updatedAt: new Date().toISOString()
+            };
+
+            fetch(`http://localhost:8000/devs/${newDev.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newDev),
+            })
+            .then(response => response.json()) // Espera a resposta como JSON
+            .then(data => {
+                if (data.message) {
+                    alert(data.message); // Exibe a mensagem retornada do backend
+                }
+                setIsModalOpen(false);
+                // Atualiza o desenvolvedor na lista, por exemplo
+                setDevelopers(prevDevs => prevDevs.map(dev => dev.id === newDev.id ? newDev : dev));
+            })
+            .catch(error => {
+                console.error("Erro ao atualizar desenvolvedor:", error);
+                alert('Erro ao atualizar desenvolvedor!');
+            });
+        } else {
+
+            const newDeveloper = {
+                id: developers.length + 1,
+                ...newDev,
+                level: levels.find(l => l.id === parseInt(newDev.level))?.level || "", // Converte o level para número
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+        
 
         fetch("http://localhost:8000/devs", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newDeveloper)
         })
-            .then(response => {
+            .then(async (response) => {
                 if (!response.ok) {
-                    return response.text().then(text => { throw new Error(text) });
+                    const errorText = await response.text();
+                    throw new Error(errorText);
                 }
-                return response.json();
+                return response.text();
             })
             .then(data => {
+                // Se a resposta for JSON, atualiza a lista de desenvolvedores
                 setDevelopers(prevDevelopers => [...prevDevelopers, data]);
-                setIsModalOpen(false);
                 alert("Desenvolvedor cadastrado com sucesso!");
+                alert("Por favor atualize a página para ver as alterações");
+                setIsModalOpen(false); // Fecha o modal
             })
-            .catch(error => console.error("Erro ao cadastrar desenvolvedor:", error));
+            .catch(error => {
+                console.error("Erro ao cadastrar desenvolvedor:", error);
+                alert(error.message); // Exibe a mensagem de erro
+            });
+        }
+    };
+
+    const handleEdit = (dev) => {
+        setNewDev({
+            ...dev,
+            level: levels.find(level => level.level === dev.level)?.id || ""
+        });
+        setIsModalOpen(true);
     };
 
     const handleDelete = (id) => {
@@ -195,16 +263,16 @@ function Developers() {
         fetch(`http://localhost:8000/devs/${id}`, {
             method: "DELETE"
         })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(text => { throw new Error(text) });
-            }
-            setDevelopers(developers.filter(dev => dev.id !== id));
-            alert("Desenvolvedor excluído com sucesso!");
-        })
-        .catch(error => console.error("Erro ao excluir desenvolvedor:", error));
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                setDevelopers(developers.filter(dev => dev.id !== id));
+                alert("Desenvolvedor excluído com sucesso!");
+            })
+            .catch(error => console.error("Erro ao excluir desenvolvedor:", error));
     };
-    
+
 
     return (
         <DevelopersContainer>
@@ -212,14 +280,16 @@ function Developers() {
             <CardsWrapper>
                 {developers.map((dev) => (
                     <Card key={dev.id}>
-    <h2>{dev.name}</h2>
-    <p><strong>Idade:</strong> {dev.age}</p>
-    <p><strong>Gênero:</strong> {dev.gender}</p>
-    <p><strong>Nascimento:</strong> {dev.date_of_birth ? format(new Date(dev.date_of_birth), "dd/MM/yyyy") : ""}</p>
-    <p><strong>Hobby:</strong> {dev.hobby}</p>
-    <p><strong>Nível:</strong> {dev.level.level}</p>
-    <Button onClick={() => handleDelete(dev.id)}>Excluir</Button>
-</Card>
+                        <h2>{dev.name}</h2>
+                        <p><strong>Idade:</strong> {dev.age}</p>
+                        <p><strong>Gênero:</strong> {dev.gender}</p>
+                        <p><strong>Nascimento:</strong> {dev.date_of_birth ? format(new Date(dev.date_of_birth), "dd/MM/yyyy") : ""}</p>
+                        <p><strong>Hobby:</strong> {dev.hobby}</p>
+                        <p><strong>Nível:</strong> {dev.level}</p>
+                        <Button onClick={() => handleDelete(dev.id)}>Excluir</Button>
+                        <Button onClick={() => handleEdit(dev)}>Editar</Button> {/* Novo botão de editar */}
+                    </Card>
+
                 ))}
             </CardsWrapper>
             <Button onClick={() => setIsModalOpen(true)}>Cadastrar</Button>

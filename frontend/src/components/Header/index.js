@@ -10,13 +10,13 @@ const HeaderContainer = styled.header`
     background-color: #fff;
 `;
 
-function Header({ setFilterLevel }) {
+function Header() {
     return (
         <HeaderContainer>
             <Link to="/">
                 <Logo />
             </Link>
-            <OptionsHeader setFilterLevel={setFilterLevel} />
+            <OptionsHeader />
         </HeaderContainer>
     );
 }

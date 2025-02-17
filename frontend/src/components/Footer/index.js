@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 
 const FooterPage = styled.footer`
-    background-color: #fff;
-    color: #3E444F;
+    background-color: #3E444F;
+    color: #ffffff;
     text-align: center;
     padding: 10px;
     margin-top: 50px;
     font-size: 14px;
-    bottom: 0;
-    width: 100vw;
-    position: fixed;
+    width: 100%;
+    margin-top: auto; /* Adiciona espaço para empurrar o footer para o fim */
 `;
 
 function Footer() {
